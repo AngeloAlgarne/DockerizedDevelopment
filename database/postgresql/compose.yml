@@ -1,0 +1,27 @@
+services:
+  postgres-db:
+    container_name: postgres-db
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    healthcheck:
+      test: psql -U postgres -q -d postgres -c "SELECT 'ready';"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/data/pgdata
+
+# Uncomment external true if you are trying to **re-attach** the volumes to new docker compose
+volumes:
+  postgres-db-data:
+    name: postgres-db-data
+    external: true
