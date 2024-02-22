@@ -1,24 +1,23 @@
-# ********** BASE **********
-FROM odoo:17 AS base
-WORKDIR /etc/odoo
-COPY py_requirements.txt /etc/odoo/requirements.txt
+# ---------------------------- 
+#      Odoo Docker Image 
+# ----------------------------
 
-# ********** DEVELOPMENT **********
-FROM base AS dev
+FROM odoo:17
 
-# use root user then add commands
 USER root
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y git \
  && apt-get install -y sudo
-
-# create vscode user then add to docker group
+ 
 RUN useradd -s /bin/bash -m vscode \
  && groupadd docker \
  && usermod -aG docker vscode \
  && echo 'vscode:vscode' | sudo chpasswd
- 
-# install dependencies
+
+WORKDIR /etc/odoo
+COPY <YOUR-FOLDER-NAME>/requirements.txt /etc/odoo/requirements.txt
+
 RUN pip install -r /etc/odoo/requirements.txt
 
+EXPOSE 8069

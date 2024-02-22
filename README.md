@@ -2,11 +2,14 @@
 This is a template for dockerized development with VS Code.
 
 ## How it works
+
+Instead of having all your packages installed in your local storage, have it all installed in one development container.
 1. You must first have docker installed
 2. Fork and clone this repository, or maybe just download the folder
-3. Clone your development folder inside this root folder
+3. Clone your project inside this _projects_ folder
 4. Modify the docker templates and use them accordingly
-5. After completing the setup below, you should be able to develop inside docker.
+5. You should now have a docker compose for your app, and a separate container for development
+6. Start developing inside your container
 
 ## Directory
 1. `.devcontainer` contains the json file used by VS Code to enable dockerized development.
@@ -14,19 +17,21 @@ This is a template for dockerized development with VS Code.
 3. `Dockerfile` and `compose.yml` is for running Odoo 16 server in Docker desktop.
 
 # Setup
-Fllow the steps below to start the development process. Note that this project has only been tested in Windows.
+Follow the steps below to start the development process. Note that this project has only been tested in Windows.
 
 ## Requirements
 1. Docker desktop ([installation guide](https://docs.docker.com/desktop/install/windows-install/ "How to install?"))
 2. [VS Code](https://code.visualstudio.com/ "What's VS Code? How to install?")
 
 ## Steps to start
-1. Clone this git repository or download the folder, then clone your project inside the `project` folder.
-2. Open the terminal and enter `docker compose up -d`. Make sure that `external: true` is commented out in the `compose` file.
-3. Uncomment the `external: true` so that data is saved regardless of the container, then run `docker compose build` and `docker compose up -d` in the same terminal.
+- Clone this git repository or download the folder.
+- Clone your project inside the `projects/` folder.
+- Copy one of the correspending compose and/or dockerfile for your project, found in `docker` folder, and paste it on the root folder.  Make sure that you change the docker filename setting in the `devcontainer.json` file.
+- Open the terminal in the root folder and enter `docker compose up -d`. Make sure that `external: true` is __commented out__ in the **compose** file.
+3. Uncomment the `external: true` to enable reattachment of the volumes, then run `docker compose build` and `docker compose up -d` in the same terminal.
 4. Open VS Code and click the double bracket icon at the bottom left then select "*Reopen in Container*" and pick "*Existing Docker*" option. Once done, you should be able to see a new container with a random name. You can rename the container in command prompt with `docker rename <random_name> <new_name>`.
-5. You should now be able to see the same files in the directory. At this point, you can also close the terminal.
-6. Start coding inside the `extra-addons` directory.
+5. You should now be able to see the same files in the directory; you can now also exit the terminal.
+6. Happy coding!
 
 # Notes
 

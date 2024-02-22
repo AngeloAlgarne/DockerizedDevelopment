@@ -1,3 +1,3 @@
 
-# ignore folders in the project folder
-project/*/
+# ignore folders in the projects folder
+projects/*/

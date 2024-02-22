@@ -1,0 +1,16 @@
+# ---------------------------- 
+#      ReactJS Docker Image 
+# ----------------------------
+
+FROM node:latest
+
+WORKDIR /react
+
+COPY package.json /react/
+COPY projects/<YOUR-FOLDER-NAME>/src /react/
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

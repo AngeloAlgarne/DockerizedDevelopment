@@ -1,0 +1,28 @@
+services:
+  # odoo web app
+  odoo-web:
+    container_name: odoo-web
+    build:
+      context: ./Docker # dockerfile
+      target: odoo      # image name
+    depends_on:
+    - odoo-db
+    volumes:
+    # - odoo-web-data:/var/lib/odoo
+    # - .:/workspace/amyu-ets-demo:cached
+    - ./projects/amyu16:/mnt/extra-addons
+    - ./projects/amyu16/common:/mnt/extra-addons
+    ports:
+    - "8069:8069"
+    expose:
+    - 8069
+    environment:
+    - HOST=postgres-db
+    - USER=admin
+    - PASSWORD=admin
+
+# Uncomment external true if you are trying to **re-attach** the volumes to new docker compose
+# volumes:
+#   odoo-db-data:
+#     name: odoo-db-data
+#     external: true
