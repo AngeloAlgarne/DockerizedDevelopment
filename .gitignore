@@ -1,3 +1,4 @@
 
-# ignore folders in the projects folder
+# ignore folders and dockerfiles in the projects folder
 projects/*/
+projects/Dockerfile.*

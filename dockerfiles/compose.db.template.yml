@@ -1,0 +1,55 @@
+version: '3.9'
+services:
+  postgres-db:
+    container_name: postgres-db
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    healthcheck:
+      test: psql -U postgres -q -d postgres -c "SELECT 'ready';"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/data/pgdata
+      
+  mysql-db:
+    container_name: mysql-db
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    # NOTE: use of "mysql_native_password" is not recommended: 
+    # https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+
+# NOTE: Uncomment external true if you are trying to **re-attach** the volumes to new docker compose
+# The best way to do this so that your data is saved even when database container is deleted:
+# - First, run "docker compose up" with the "external: true" commented out
+# - Then, rerun "docker compose up" after uncommenting "external: true".
+volumes:
+  postgres-db-data:
+    name: postgres-db-data
+    external: true

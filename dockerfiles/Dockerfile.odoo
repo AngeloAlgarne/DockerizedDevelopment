@@ -16,7 +16,7 @@ RUN useradd -s /bin/bash -m vscode \
  && echo 'vscode:vscode' | sudo chpasswd
 
 WORKDIR /etc/odoo
-COPY <YOUR-FOLDER-NAME>/requirements.txt /etc/odoo/requirements.txt
+COPY <project_folder_name>/requirements.txt /etc/odoo/requirements.txt
 
 RUN pip install -r /etc/odoo/requirements.txt
 

@@ -6,8 +6,8 @@ FROM node:latest
 
 WORKDIR /react
 
-COPY package.json /react/
-COPY projects/<YOUR-FOLDER-NAME>/src /react/
+COPY <project_folder_name>/package.json /react/
+COPY <project_folder_name>/src /react/
 
 RUN npm install
 

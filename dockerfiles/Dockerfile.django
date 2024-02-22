@@ -3,11 +3,13 @@ FROM  python:latest
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /django
-COPY . /django/
+COPY <project_folder_name> /django/
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+COPY extra-files/django/entrypoint.sh /entrypoint/
+
 EXPOSE 8000
 
-ENTRYPOINT [ "/django/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint/entrypoint.sh" ]
