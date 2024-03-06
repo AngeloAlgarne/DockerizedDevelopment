@@ -8,65 +8,62 @@ services:
       context: ./projects
       dockerfile: ./Dockerfile.amyu16
     volumes: # /mnt/extra-addons is required, see odoo documentation
-    - ./projects/amyu16:/mnt/extra-addons
+    - ./projects/amyu16/hrad:/mnt/extra-addons/hrad
+    - ./projects/amyu16/amyu1:/mnt/extra-addons/amyu1
+    - ./projects/amyu16/ets:/mnt/extra-addons/ets
+    - ./projects/amyu16/tracker:/mnt/extra-addons/amyu1/tracker
     - ./projects/amyu16/common:/mnt/extra-addons
     ports:
     - "8069:8069"
     expose:
     - 8069
     environment:
-    - HOST=postgres-db
+    - HOST=odoo-db
     - USER=odoo # add this user in your database first
     - PASSWORD=admin # with the appropriate password
   
   # React container
-  react-web:
-    container_name: animelist
-    build:
-      context: ./projects
-      dockerfile: ./Dockerfile.animelist
-    volumes:
-      - ./projects/animelist:/react
-    ports:
-    - "3000:3000"
-    expose:
-    - 3000
+  # react-web:
+  #   container_name: animelist
+  #   build:
+  #     context: ./projects
+  #     dockerfile: ./Dockerfile.animelist
+  #   volumes:
+  #     - ./projects/animelist:/react
+  #   ports:
+  #   - "3000:3000"
+  #   expose:
+  #   - 3000
 
   # Django container
-  django-web:
-    container_name: amyu-lms-private
-    build:
-      context: ./projects
-      dockerfile: ./Dockerfile.lms
-    volumes:
-      - ./projects/amyu-lms-private:/django
-    ports:
-    - "8000:8000"
-    expose:
-    - 8000
+  # django-web:
+  #   container_name: amyu-lms-private
+  #   build:
+  #     context: ./projects
+  #     dockerfile: ./Dockerfile.lms
+  #   volumes:
+  #     - ./projects/amyu-lms-private:/django
+  #   ports:
+  #   - "8000:8000"
+  #   expose:
+  #   - 8000
   
   # Database container
-  postgres-db:
-    container_name: postgres-db
+  odoo-db:
+    container_name: odoo-db
     image: postgres
     restart: always
     environment:
       - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=admin
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
     expose:
       - 5432
-    healthcheck:
-      test: psql -U postgres -q -d postgres -c "SELECT 'ready';"
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 5s
     volumes:
-      - postgres-db-data:/var/lib/postgresql/data/pgdata
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
 
 
 # NOTE: Uncomment external true if you are trying to **re-attach** the volumes to new docker compose
@@ -74,6 +71,6 @@ services:
 # - First, run "docker compose up" with the "external: true" commented out
 # - Then, rerun "docker compose up" after uncommenting "external: true".
 volumes:
-  postgres-db-data:
-    name: postgres-db-data
-    external: true
+  odoo-db-data:
+    name: odoo-db-data
+    # external: true
