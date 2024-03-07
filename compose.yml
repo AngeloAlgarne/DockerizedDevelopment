@@ -1,55 +1,60 @@
 services:
+  # The container_name should preferably be the name of the project
 
   # Odoo container
   odoo-web:
-    # container_name is preferably the name of the project
     container_name: amyu16
     build:
       context: ./projects
       dockerfile: ./Dockerfile.amyu16
     volumes: # /mnt/extra-addons is required, see odoo documentation
-    - ./projects/amyu16:/mnt/extra-addons
+    - ./projects/amyu16/amyu1:/mnt/extra-addons/amyu1
+    - ./projects/amyu16/ets:/mnt/extra-addons/ets
+    - ./projects/amyu16/hrad:/mnt/extra-addons/hrad
+    - ./projects/amyu16/tracker:/mnt/extra-addons/tracker
     - ./projects/amyu16/common:/mnt/extra-addons
+    - ./projects/amyu16/requirements.txt:/etc/odoo/requirements.txt
     ports:
     - "8069:8069"
     expose:
     - 8069
     environment:
     - HOST=postgres-db
-    - USER=odoo # add this user in your database first
+    - USER=odoo # add this user in your database first: CREATE ROLE username WITH LOGIN SUPERUSER PASSWORD 'password';
     - PASSWORD=admin # with the appropriate password
+
   
   # React container
-  react-web:
-    container_name: animelist
-    build:
-      context: ./projects
-      dockerfile: ./Dockerfile.animelist
-    volumes:
-      - ./projects/animelist:/react
-    ports:
-    - "3000:3000"
-    expose:
-    - 3000
+  # react-web:
+  #   container_name: animelist
+  #   build:
+  #     context: ./projects
+  #     dockerfile: ./Dockerfile.animelist
+  #   volumes:
+  #     - ./projects/animelist:/react
+  #   ports:
+  #   - "3000:3000"
+  #   expose:
+  #   - 3000
 
   # Django container
-  django-web:
-    container_name: amyu-lms-private
-    build:
-      context: ./projects
-      dockerfile: ./Dockerfile.lms
-    volumes:
-      - ./projects/amyu-lms-private:/django
-    ports:
-    - "8000:8000"
-    expose:
-    - 8000
+  # django-web:
+  #   container_name: amyu-lms-private
+  #   build:
+  #     context: ./projects
+  #     dockerfile: ./Dockerfile.lms
+  #   volumes:
+  #     - ./projects/amyu-lms-private:/django
+  #   ports:
+  #   - "8000:8000"
+  #   expose:
+  #   - 8000
   
   # Database container
   postgres-db:
     container_name: postgres-db
     image: postgres
-    restart: always
+    restart: unless-stopped
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres

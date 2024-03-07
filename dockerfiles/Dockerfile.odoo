@@ -2,7 +2,7 @@
 #      Odoo Docker Image 
 # ----------------------------
 
-FROM odoo:17
+FROM odoo:16
 
 USER root
 RUN apt-get update \
