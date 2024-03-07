@@ -19,9 +19,9 @@ services:
     expose:
     - 8069
     environment:
-    - HOST=postgres-db
-    - USER=odoo # add this user in your database first: CREATE ROLE username WITH LOGIN SUPERUSER PASSWORD 'password';
-    - PASSWORD=admin # with the appropriate password
+    - HOST=odoo-db
+    - USER=odoo
+    - PASSWORD=admin
 
   
   # React container
@@ -51,27 +51,21 @@ services:
   #   - 8000
   
   # Database container
-  postgres-db:
-    container_name: postgres-db
+  odoo-db:
+    container_name: odoo-db
     image: postgres
     restart: unless-stopped
     environment:
       - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=admin
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
     expose:
       - 5432
-    healthcheck:
-      test: psql -U postgres -q -d postgres -c "SELECT 'ready';"
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 5s
     volumes:
-      - postgres-db-data:/var/lib/postgresql/data/pgdata
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
 
 
 # NOTE: Uncomment external true if you are trying to **re-attach** the volumes to new docker compose
@@ -79,6 +73,6 @@ services:
 # - First, run "docker compose up" with the "external: true" commented out
 # - Then, rerun "docker compose up" after uncommenting "external: true".
 volumes:
-  postgres-db-data:
-    name: postgres-db-data
-    external: true
+  odoo-db-data:
+    name: odoo-db-data
+    # external: true
