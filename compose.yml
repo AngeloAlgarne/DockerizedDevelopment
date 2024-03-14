@@ -8,12 +8,24 @@ services:
       context: ./projects
       dockerfile: ./Dockerfile.amyu16
     volumes: # /mnt/extra-addons is required, see odoo documentation
+    - ./projects/amyu16/requirements.txt:/etc/odoo/requirements.txt
+    # AMYU Systems
     - ./projects/amyu16/amyu1:/mnt/extra-addons/amyu1
+    - ./projects/amyu16/bcs:/mnt/extra-addons/bcs
     - ./projects/amyu16/ets:/mnt/extra-addons/ets
     - ./projects/amyu16/hrad:/mnt/extra-addons/hrad
     - ./projects/amyu16/tracker:/mnt/extra-addons/tracker
-    - ./projects/amyu16/common:/mnt/extra-addons
-    - ./projects/amyu16/requirements.txt:/etc/odoo/requirements.txt
+    # Common modules
+    - ./projects/amyu16/common/auth_session_timeout:/mnt/extra-addons/auth_session_timeout
+    - ./projects/amyu16/common/employee_documents_expiry:/mnt/extra-addons/employee_documents_expiry
+    - ./projects/amyu16/common/hide_menu_user:/mnt/extra-addons/hide_menu_user
+    - ./projects/amyu16/common/hr_organizational_chart:/mnt/extra-addons/hr_organizational_chart
+    - ./projects/amyu16/common/mobile:/mnt/extra-addons/mobile
+    - ./projects/amyu16/common/muk_web_theme:/mnt/extra-addons/muk_web_theme
+    - ./projects/amyu16/common/onehr_fixed_assets:/mnt/extra-addons/onehr_fixed_assets
+    - ./projects/amyu16/common/onehr_payroll:/mnt/extra-addons/onehr_payroll
+    - ./projects/amyu16/common/onehr_tk:/mnt/extra-addons/onehr_tk
+    - ./projects/amyu16/common/prt_report_attachment_preview:/mnt/extra-addons/prt_report_attachment_preview
     ports:
     - "8069:8069"
     expose:
@@ -75,4 +87,4 @@ services:
 volumes:
   odoo-db-data:
     name: odoo-db-data
-    # external: true
+    external: true
