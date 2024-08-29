@@ -13,7 +13,6 @@ Instead of having all your packages installed in your local storage, have it all
 
 ## Directory
 - `.devcontainer` contains the json file used by VS Code to enable dockerized development.
-- 
 
 # Setup
 Follow the steps below to start the development process. Note that this project has only been tested in Windows.
@@ -45,6 +44,6 @@ Once the setup is done, you should now be able to work on the code. Some good ru
 
 
 # Foot Notes
-> This is extremely confusing to do. Might be for niche use cases only, but I think I still want to try making this work even if it's not as necessary. Although, as blunt as it is, this might literally just be useless.
+> This is extremely confusing to do. Might be for niche use cases only, but I think I still want to try making this work even if it's not as necessary.
 > <br>
 > — Angelo Algarne
