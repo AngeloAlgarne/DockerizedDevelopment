@@ -11,9 +11,6 @@ Instead of having all your packages installed in your local storage, have it all
 5. You should now have a docker compose for your app, and a separate container for development
 6. Start developing inside your container
 
-## Directory
-- `.devcontainer` contains the json file used by VS Code to enable dockerized development.
-
 # Setup
 Follow the steps below to start the development process. Note that this project has only been tested in Windows.
 
